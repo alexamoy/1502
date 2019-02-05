@@ -1,9 +1,12 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
-import { Login } from './components';
+import { Route, Switch } from 'react-router-dom';
+import { Login, Home } from './components';
 
 export const Routes = () => {
   return (
-    <Route path='/login' component={ Login } />
+    <Switch>
+      <Route exact path='/' component={ Home } />
+      <Route path='/login' component={ Login } />
+    </Switch>
   );
 };
