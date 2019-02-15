@@ -1,9 +1,15 @@
 import axios from 'axios';
 
+//action creator name
 const GET_USERS = 'GET_USERS';
+// const ADD_USER = 'ADD_USER';
 
+//action creator
 export const getUsers = users => ({ type: GET_USERS, users });
 
+// /export const addUser = user => ({ type: ADD_USER, user });
+
+//thunk
 export const fetchUsers = () => {
   return async dispatch => {
     try {

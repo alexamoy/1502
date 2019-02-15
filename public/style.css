@@ -12,3 +12,7 @@
   text-align: center;
 }
 
+#navbar {
+  position: fixed;
+  width: 100vw;
+}
