@@ -13,9 +13,10 @@ export default class Home extends Component {
     return (
       <div>
         <h1>HOME PAGE </h1>
+        <h2>Member Ranking: </h2>
         {
           users.map((user, idx) =>
-            <h2 key={idx}>{user.name}</h2>
+            <h2 key={idx}>{idx + 1}. {user.name}</h2>
           )
         }
       </div>
