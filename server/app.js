@@ -9,6 +9,7 @@ const PORT = 1502;
 
 const { connectDb, models } = require('./db');
 const users = require( './db/mockdata/mock-users' );
+const items = require( './db/mockdata/mock-items' );
 
 app.use( morgan( 'dev' ) );
 
@@ -45,8 +46,10 @@ connectDb().then(async () => {
   if (eraseDatabaseOnSync) {
     await Promise.all([
       models.User.deleteMany({}),
+      models.Item.deleteMany({})
     ]);
     createUsers();
+    createItems();
   }
   app.listen(PORT, () => console.log(`Gettin litty on port ${PORT}`));
 });
@@ -57,5 +60,14 @@ const createUsers = () => {
       name: user.name,
     });
     await newUser.save();
+  });
+};
+
+const createItems = () => {
+  items.forEach(async item => {
+    const newItem = new models.Item({
+      name: item.name,
+    });
+    await newItem.save();
   });
 };

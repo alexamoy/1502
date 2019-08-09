@@ -408,36 +408,30 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 var ShoppingList =
 /*#__PURE__*/
-function (_React$Component) {
-  _inherits(ShoppingList, _React$Component);
+function (_Component) {
+  _inherits(ShoppingList, _Component);
 
-  function ShoppingList() {
-    var _this;
-
+  function ShoppingList(props) {
     _classCallCheck(this, ShoppingList);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(ShoppingList).call(this));
-    _this.state = {
-      list: [{
-        name: 'Item 1'
-      }, {
-        name: 'Item 2'
-      }, {
-        name: 'Item 3'
-      }]
-    };
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(ShoppingList).call(this, props));
   }
 
   _createClass(ShoppingList, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.loadItems();
+    }
+  }, {
     key: "render",
     value: function render() {
+      var items = this.props.items ? this.props.items : [];
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "shopping-list-container",
         className: "vw-100"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["ListGroup"], {
         className: "w-75"
-      }, this.state.list.map(function (item, key) {
+      }, items.map(function (item, key) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["ListGroup"].Item, {
           key: key
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -448,7 +442,7 @@ function (_React$Component) {
   }]);
 
   return ShoppingList;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 
 
@@ -489,6 +483,41 @@ var HomeContainer = Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(
 
 /***/ }),
 
+/***/ "./client/components/containers/ShoppingListContainer.js":
+/*!***************************************************************!*\
+  !*** ./client/components/containers/ShoppingListContainer.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../store */ "./client/store/index.js");
+/* harmony import */ var _ShoppingList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ShoppingList */ "./client/components/ShoppingList.js");
+
+
+
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    items: state.items
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    loadItems: function loadItems() {
+      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_1__["fetchItems"])());
+    }
+  };
+};
+
+var ShoppingListContainer = Object(react_redux__WEBPACK_IMPORTED_MODULE_0__["connect"])(mapStateToProps, mapDispatchToProps)(_ShoppingList__WEBPACK_IMPORTED_MODULE_2__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (ShoppingListContainer);
+
+/***/ }),
+
 /***/ "./client/components/index.js":
 /*!************************************!*\
   !*** ./client/components/index.js ***!
@@ -507,8 +536,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Navbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Navbar */ "./client/components/Navbar.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MyNavbar", function() { return _Navbar__WEBPACK_IMPORTED_MODULE_2__["default"]; });
 
-/* harmony import */ var _ShoppingList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ShoppingList */ "./client/components/ShoppingList.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ShoppingList", function() { return _ShoppingList__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+/* harmony import */ var _containers_ShoppingListContainer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./containers/ShoppingListContainer */ "./client/components/containers/ShoppingListContainer.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ShoppingList", function() { return _containers_ShoppingListContainer__WEBPACK_IMPORTED_MODULE_3__["default"]; });
 
 
 
@@ -607,7 +636,7 @@ var Routes = function Routes() {
 /*!*******************************!*\
   !*** ./client/store/index.js ***!
   \*******************************/
-/*! exports provided: getUsers, fetchUsers, default */
+/*! exports provided: getUsers, fetchUsers, default, getItems, fetchItems */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -621,6 +650,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getUsers", function() { return _reducers_users__WEBPACK_IMPORTED_MODULE_4__["getUsers"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "fetchUsers", function() { return _reducers_users__WEBPACK_IMPORTED_MODULE_4__["fetchUsers"]; });
+
+/* harmony import */ var _reducers_shoppingList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./reducers/shoppingList */ "./client/store/reducers/shoppingList.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getItems", function() { return _reducers_shoppingList__WEBPACK_IMPORTED_MODULE_5__["getItems"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "fetchItems", function() { return _reducers_shoppingList__WEBPACK_IMPORTED_MODULE_5__["fetchItems"]; });
+
 
 
 
@@ -642,12 +677,100 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _users__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./users */ "./client/store/reducers/users.js");
+/* harmony import */ var _shoppingList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./shoppingList */ "./client/store/reducers/shoppingList.js");
+
 
 
 var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
-  users: _users__WEBPACK_IMPORTED_MODULE_1__["default"]
+  users: _users__WEBPACK_IMPORTED_MODULE_1__["default"],
+  items: _shoppingList__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (rootReducer);
+
+/***/ }),
+
+/***/ "./client/store/reducers/shoppingList.js":
+/*!***********************************************!*\
+  !*** ./client/store/reducers/shoppingList.js ***!
+  \***********************************************/
+/*! exports provided: getItems, fetchItems, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getItems", function() { return getItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchItems", function() { return fetchItems; });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+ //action creator name
+
+var GET_ITEMS = 'GET_ITEMS'; //action creator
+
+var getItems = function getItems(items) {
+  return {
+    type: GET_ITEMS,
+    items: items
+  };
+}; //thunk
+
+var fetchItems = function fetchItems() {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee(dispatch) {
+        var response, items;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/items');
+
+              case 3:
+                response = _context.sent;
+                items = response.data;
+                dispatch(getItems(items));
+                _context.next = 11;
+                break;
+
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](0);
+                console.error(_context.t0);
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[0, 8]]);
+      }));
+
+      return function (_x) {
+        return _ref.apply(this, arguments);
+      };
+    }()
+  );
+};
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case GET_ITEMS:
+      return action.items;
+
+    default:
+      return state;
+  }
+});
 
 /***/ }),
 

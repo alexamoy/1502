@@ -1,24 +1,20 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { ListGroup, Form } from 'react-bootstrap';
 
-export default class ShoppingList extends React.Component {
-  constructor(){
-    super();
-    this.state = {
-      list: [
-        {name: 'Item 1'},
-        {name: 'Item 2'},
-        {name: 'Item 3'}
-      ]
-    };
+export default class ShoppingList extends Component {
+  constructor(props){
+    super(props);
   }
-
+  componentDidMount() {
+    this.props.loadItems();
+  }
   render() {
+    const items = this.props.items ? this.props.items : [];
     return (
       <div id="shopping-list-container" className="vw-100">
         <ListGroup className="w-75">
           {
-            this.state.list.map((item, key) => {
+            items.map((item, key) => {
               return (
                 <ListGroup.Item key={key}>
                   <div className="d-flex flex-row justify-content-between">
