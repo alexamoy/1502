@@ -9,7 +9,7 @@ export default class Home extends Component {
     this.props.loadUsers();
   }
   render() {
-    const users = this.props.users;
+    const users = this.props.users.sort((a, b) => a.name - b.name);
     return (
       <div>
         <h1>HOME PAGE </h1>
