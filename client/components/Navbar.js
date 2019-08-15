@@ -7,7 +7,7 @@ export default class MyNavbar extends React.Component {
   }
   render() {
     return (
-      <Navbar bg="light" expand="lg" id="navbar">
+      <Navbar bg="dark" variant="dark" expand="lg" id="navbar">
         <Navbar.Brand href="#home">1502 $hit</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

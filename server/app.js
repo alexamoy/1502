@@ -67,6 +67,7 @@ const createItems = () => {
   items.forEach(async item => {
     const newItem = new models.Item({
       name: item.name,
+      store: item.store
     });
     await newItem.save();
   });

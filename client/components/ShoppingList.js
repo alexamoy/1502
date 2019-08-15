@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ListGroup, Form } from 'react-bootstrap';
+import { ListGroup, Form, Button } from 'react-bootstrap';
 
 export default class ShoppingList extends Component {
   constructor(props){
@@ -16,7 +16,7 @@ export default class ShoppingList extends Component {
           {
             items.map((item, key) => {
               return (
-                <ListGroup.Item key={key}>
+                <ListGroup.Item key={key} variant="dark">
                   <div className="d-flex flex-row justify-content-between">
                     <span>{item.name}</span>
                     <Form.Check />

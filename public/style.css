@@ -1,8 +1,11 @@
+@import url('../node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css');
+
 #app-body {
   display: flex;
   justify-content: center;
   height: 100vh;
   width: 100vw;
+  background-color: #232324;
 }
 
 #login-container {

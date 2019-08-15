@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { fetchItems } from '../../store';
+import { fetchItems, addItemPost } from '../../store';
 import ShoppingList from '../ShoppingList';
 
 const mapStateToProps = state => {
@@ -12,6 +12,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   loadItems: () => {
     return dispatch(fetchItems());
+  },
+  addItem: (item) => {
+    return dispatch(addItemPost(item));
   }
 });
 

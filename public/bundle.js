@@ -344,7 +344,8 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Navbar"], {
-        bg: "light",
+        bg: "dark",
+        variant: "dark",
         expand: "lg",
         id: "navbar"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Navbar"].Brand, {
@@ -433,7 +434,8 @@ function (_Component) {
         className: "w-75"
       }, items.map(function (item, key) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["ListGroup"].Item, {
-          key: key
+          key: key,
+          variant: "dark"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "d-flex flex-row justify-content-between"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, item.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Form"].Check, null)));
@@ -509,6 +511,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     loadItems: function loadItems() {
       return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_1__["fetchItems"])());
+    },
+    addItem: function addItem(item) {
+      return dispatch(Object(_store__WEBPACK_IMPORTED_MODULE_1__["addItemPost"])(item));
     }
   };
 };
@@ -636,7 +641,7 @@ var Routes = function Routes() {
 /*!*******************************!*\
   !*** ./client/store/index.js ***!
   \*******************************/
-/*! exports provided: getUsers, fetchUsers, default, getItems, fetchItems */
+/*! exports provided: getUsers, fetchUsers, getItems, addItem, fetchItems, addItemPost, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -654,7 +659,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _reducers_shoppingList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./reducers/shoppingList */ "./client/store/reducers/shoppingList.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getItems", function() { return _reducers_shoppingList__WEBPACK_IMPORTED_MODULE_5__["getItems"]; });
 
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "addItem", function() { return _reducers_shoppingList__WEBPACK_IMPORTED_MODULE_5__["addItem"]; });
+
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "fetchItems", function() { return _reducers_shoppingList__WEBPACK_IMPORTED_MODULE_5__["fetchItems"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "addItemPost", function() { return _reducers_shoppingList__WEBPACK_IMPORTED_MODULE_5__["addItemPost"]; });
 
 
 
@@ -693,27 +702,44 @@ var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])(
 /*!***********************************************!*\
   !*** ./client/store/reducers/shoppingList.js ***!
   \***********************************************/
-/*! exports provided: getItems, fetchItems, default */
+/*! exports provided: getItems, addItem, fetchItems, addItemPost, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getItems", function() { return getItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addItem", function() { return addItem; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchItems", function() { return fetchItems; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addItemPost", function() { return addItemPost; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
  //action creator name
 
-var GET_ITEMS = 'GET_ITEMS'; //action creator
+var GET_ITEMS = 'GET_ITEMS';
+var ADD_ITEM = 'ADD_ITEMS'; //action creator
 
 var getItems = function getItems(items) {
   return {
     type: GET_ITEMS,
     items: items
+  };
+};
+var addItem = function addItem(item) {
+  return {
+    type: ADD_ITEM,
+    item: item
   };
 }; //thunk
 
@@ -759,6 +785,48 @@ var fetchItems = function fetchItems() {
     }()
   );
 };
+var addItemPost = function addItemPost(body) {
+  return (
+    /*#__PURE__*/
+    function () {
+      var _ref2 = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2(dispatch) {
+        var response, newItem;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/items', body);
+
+              case 3:
+                response = _context2.sent;
+                newItem = response.data;
+                dispatch(addItem(newItem));
+                _context2.next = 11;
+                break;
+
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](0);
+                console.error(_context2.t0);
+
+              case 11:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[0, 8]]);
+      }));
+
+      return function (_x2) {
+        return _ref2.apply(this, arguments);
+      };
+    }()
+  );
+};
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
   var action = arguments.length > 1 ? arguments[1] : undefined;
@@ -766,6 +834,9 @@ var fetchItems = function fetchItems() {
   switch (action.type) {
     case GET_ITEMS:
       return action.items;
+
+    case ADD_ITEM:
+      return [].concat(_toConsumableArray(state), [[].concat(_toConsumableArray(state.items), [action.item])]);
 
     default:
       return state;

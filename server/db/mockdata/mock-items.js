@@ -1,12 +1,15 @@
 const items = [
   {
-    name: 'Bacon'
+    name: 'Bacon',
+    store: 'Target'
   },
   {
     name: 'Eggs',
+    store: 'Target'
   },
   {
     name: 'Cheese',
+    store: 'Target'
   }
 ];
 

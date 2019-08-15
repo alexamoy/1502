@@ -8,6 +8,10 @@ const itemSchema = new mongoose.Schema({
   category: {
     type: String,
     unique: false
+  },
+  store: {
+    type: String,
+    enum: ['Target', '99 Ranch Market', 'Amazon']
   }
 });
 
